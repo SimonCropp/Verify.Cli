@@ -16,13 +16,13 @@ public class Tests
     [Fact]
     public Task TestFile()
     {
-        return VerifyFile("data.json");
+        return VerifyFile(ProjectFiles.data_json.Path);
     }
 
     [Fact]
     public Task TestJson()
     {
-        return VerifyJson(File.ReadAllTextAsync("data.json", TestContext.Current.CancellationToken));
+        return VerifyJson(File.ReadAllTextAsync(ProjectFiles.data_json, TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class Tests
         var settings = new VerifySettings();
         settings.AddScrubber(StringScrubber.BuildReplaceStrings("(?<prefix>\")/_astro/[^\"]+(?<suffix>\")"));
 
-        return VerifyFile("azure-pipeline-template-expression.html", settings);
+        return VerifyFile(ProjectFiles.azure_pipeline_template_expression_html.Path, settings);
     }
 
     [Fact]

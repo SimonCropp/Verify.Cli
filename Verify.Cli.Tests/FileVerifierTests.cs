@@ -6,7 +6,7 @@ public class FileVerifierTests
     public async Task SameFiles_AreEqual()
     {
         // Arrange
-        var file = new FileInfo("examples/same.json");
+        var file = ProjectFiles.examples.same_json.Info;
         await FileVerifier.VerifyFileAsync(file, new VerifyFileOptions());
     }
 
@@ -14,7 +14,7 @@ public class FileVerifierTests
     public async Task DifferentFiles_AreNotEqual()
     {
         // Arrange
-        var file = new FileInfo("examples/different.json");
+        var file = ProjectFiles.examples.different_json.Info;
         await Assert.ThrowsAnyAsync<Exception>(async () => await FileVerifier.VerifyFileAsync(file, new VerifyFileOptions()));
     }
 
@@ -22,7 +22,7 @@ public class FileVerifierTests
     public async Task FileWithInlineDateTime_ScrubsCorrectly()
     {
         // Arrange
-        var file = new FileInfo("examples/sameWithDates.json");
+        var file = ProjectFiles.examples.sameWithDates_json.Info;
         var options = new VerifyFileOptions(ScrubInlineDatetime: "yyyy-MM-dd");
         
         // Act & Assert
@@ -33,7 +33,7 @@ public class FileVerifierTests
     public async Task FileWithInlinePattern_ScrubsCorrectly()
     {
         // Arrange
-        var file = new FileInfo("examples/azure-pipeline-template-expression.html");
+        var file = ProjectFiles.examples.azure_pipeline_template_expression_html.Info;
 
         // Pattern includes named groups for prefix and suffix
         // This ensures that the replacement string retains the original quotes around the matched pattern
@@ -47,7 +47,7 @@ public class FileVerifierTests
     public async Task FileWithMultipleInlinePatterns_ScrubsAllCorrectly()
     {
         // Arrange
-        var file = new FileInfo("examples/azure-pipeline-template-expression.html");
+        var file = ProjectFiles.examples.azure_pipeline_template_expression_html.Info;
 
         // Apply two patterns: one for /_astro paths and another for "/astro" paths
         var options = new VerifyFileOptions(
@@ -65,7 +65,7 @@ public class FileVerifierTests
     public async Task FileWithInlineRemove_RemovesCorrectly()
     {
         // Arrange
-        var file = new FileInfo("examples/withRemovableIds.html");
+        var file = ProjectFiles.examples.withRemovableIds_html.Info;
 
         // Simple text to remove (not regex) - removes all instances
         var options = new VerifyFileOptions(ScrubInlineRemoves: new[] { " data-temp-id" });
@@ -78,7 +78,7 @@ public class FileVerifierTests
     public async Task FileWithInlineRemove_EmptyPattern_ThrowsException()
     {
         // Arrange
-        var file = new FileInfo("examples/same.json");
+        var file = ProjectFiles.examples.same_json.Info;
         var options = new VerifyFileOptions(ScrubInlineRemoves: new[] { "" });
         
         // Act & Assert
@@ -89,7 +89,7 @@ public class FileVerifierTests
     public async Task FileWithInlineRemove_NullPattern_DoesNothing()
     {
         // Arrange
-        var file = new FileInfo("examples/same.json");
+        var file = ProjectFiles.examples.same_json.Info;
         var options = new VerifyFileOptions(ScrubInlineRemoves: null);
         
         // Act & Assert - Should not throw
@@ -100,7 +100,7 @@ public class FileVerifierTests
     public async Task FileWithMultipleInlineRemove_RemovesAllCorrectly()
     {
         // Arrange
-        var file = new FileInfo("examples/multiRemove.txt");
+        var file = ProjectFiles.examples.multiRemove_txt.Info;
         var options = new VerifyFileOptions(ScrubInlineRemoves: new[] { "REMOVE1", "REMOVE2" });
 
         // Act & Assert
@@ -111,7 +111,7 @@ public class FileVerifierTests
     public async Task VerifyFileAsync_NormalVerbosity_ProducesNoOutput()
     {
         // Arrange
-        var file = new FileInfo("examples/same.json");
+        var file = ProjectFiles.examples.same_json.Info;
         var options = new VerifyFileOptions(Verbosity: Verbosity.Normal);
         
         // Act & Assert - Should not throw
@@ -122,7 +122,7 @@ public class FileVerifierTests
     public async Task VerifyFileAsync_DetailedVerbosity_ProducesOutput()
     {
         // Arrange
-        var file = new FileInfo("examples/same.json");
+        var file = ProjectFiles.examples.same_json.Info;
         var options = new VerifyFileOptions(Verbosity: Verbosity.Detailed);
         
         // Capture console output
@@ -152,7 +152,7 @@ public class FileVerifierTests
     public async Task FileWithOverrideFilename_UsesAlternateVerifiedFilename()
     {
         // Arrange
-        var file = new FileInfo("examples/override-test.json");
+        var file = ProjectFiles.examples.override_test_json.Info;
         var options = new VerifyFileOptions(OverrideFilename: "override-alternate");
         
         // Act & Assert
@@ -163,7 +163,7 @@ public class FileVerifierTests
     public async Task FileWithOverrideFilename_ProducesCorrectPathInOutput()
     {
         // Arrange
-        var file = new FileInfo("examples/override-test.json");
+        var file = ProjectFiles.examples.override_test_json.Info;
         var options = new VerifyFileOptions(OverrideFilename: "override-alternate", Verbosity: Verbosity.Detailed);
         
         // Capture console output
